@@ -1,0 +1,28 @@
+{
+  "name": "fullstack-kurssi_backend_puhelinluettelo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sambo1111/fullstack-kurssi_backend_puhelinluettelo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sambo1111/fullstack-kurssi_backend_puhelinluettelo/issues"
+  },
+  "homepage": "https://github.com/sambo1111/fullstack-kurssi_backend_puhelinluettelo#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.12"
+  }
+}
