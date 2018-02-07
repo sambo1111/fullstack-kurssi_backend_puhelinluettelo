@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/sambo1111/fullstack-kurssi_backend_puhelinluettelo#readme",
   "dependencies": {
+    "cors": "^2.8.4",
     "express": "^4.16.2",
     "morgan": "^1.9.0"
   },
