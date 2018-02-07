@@ -75,7 +75,7 @@ app.post('/api/persons', (request, response) => {
   }
 
   persons = persons.concat(newPerson)
-  response.json(persons)
+  response.json(newPerson)
 })
 
 const PORT = 3001
