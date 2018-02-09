@@ -14,6 +14,7 @@ let persons = []
 
 const formatPerson = (person) => {
   return {
+    id: person.id,
     name: person.name,
     number: person.number
   }
@@ -48,7 +49,7 @@ app.get('/info', (request, response) => {
 })
 
 app.delete('/api/persons/:id', (request, response) => {
-
+  console.log(request.params)
   Person
     .findByIdAndRemove(request.params.id)
     .then(result => {
