@@ -54,21 +54,21 @@ app.delete('/api/persons/:id', (request, response) => {
 })
 
 app.post('/api/persons', (request, response) => {
-  const random = Math.floor(Math.random() * Math.floor(1000))
+
   if (request.body.name === undefined || request.body.number === undefined) {
     return response.status(400).json({error: 'bad request'})
-  } else if (persons.find(p => p.name === request.body.name)) {
-    return response.status(409).json({error: 'name must be unique'})
   }
 
-  const newPerson = {
+  const newPerson = new Person({
     name: request.body.name,
-    number: request.body.number,
-    id: random
-  }
+    number: request.body.number
+  })
 
-  persons = persons.concat(newPerson)
-  response.json(newPerson)
+  newPerson
+    .save()
+    .then(savedPerson => {
+      response.json(formatPerson(savedPerson))
+    })
 })
 
 const PORT = process.env.PORT || 3001
