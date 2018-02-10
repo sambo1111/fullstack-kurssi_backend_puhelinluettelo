@@ -67,7 +67,7 @@ app.delete('/api/persons/:id', (request, response) => {
 })
 
 app.post('/api/persons', (request, response) => {
-
+  console.log('täällä')
   if (request.body.name === undefined || request.body.number === undefined) {
     return response.status(400).json({error: 'bad request'})
   }
@@ -81,6 +81,7 @@ app.post('/api/persons', (request, response) => {
     .find({name: newPerson.name})
     .then(result => {
       if (result.length < 1) {
+        console.log(result)
         newPerson
         .save()
         .then(savedPerson => {
@@ -90,9 +91,31 @@ app.post('/api/persons', (request, response) => {
           console.log(error)
           response.status(404).end()
         })
+      } else {
+        response.status(409).end()
       }
-      response.status(409).end()
     })
+})
+
+app.put('/api/persons/:id', (request, response) => {
+  console.log('jees')
+  const body = request.body
+
+  const newPerson = {
+    name: body.name,
+    name: body.number
+  }
+
+  Person
+  .findByIdAndUpdate(request.params.id, newPerson, {new:true})
+  .then(updatedPerson => {
+    response.json(formatPerson(updatedPerson))
+  })
+  .catch(error => {
+    console.log(error)
+    response.status(400).send({error: 'malformatted id'})
+  })
+
 })
 
 const PORT = process.env.PORT || 3001
