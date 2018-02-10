@@ -103,7 +103,7 @@ app.put('/api/persons/:id', (request, response) => {
 
   const newPerson = {
     name: body.name,
-    name: body.number
+    number: body.number
   }
 
   Person
