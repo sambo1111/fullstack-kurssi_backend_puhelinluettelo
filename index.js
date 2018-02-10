@@ -35,21 +35,26 @@ app.get('/api/persons', (request, response) => {
 })
 
 app.get('/api/persons/:id', (request, response) => {
-  const person = persons.find(p => p.id === Number(request.params.id))
-  if (person) {
-    response.json(person)
-  } else {
-    response.status(404).end()
-  }
+  Person
+    .findById(request.params.id)
+    .then(person => {
+      response.json(formatPerson(person))
+    })
+    .catch (error => {
+      response.status(400).send({error: 'malformatted id'})
+    })
 })
 
 app.get('/info', (request, response) => {
-  response.send(`<div> puhelinluettelossa ${persons.length} henkilön tiedot </div>
-                 <div> ${new Date()}`)
+  Person
+    .find({})
+    .then (persons => {
+      response.send(`<div> puhelinluettelossa ${persons.length} henkilön tiedot </div>
+                     <div> ${new Date()}`)
+    })
 })
 
 app.delete('/api/persons/:id', (request, response) => {
-  console.log(request.params)
   Person
     .findByIdAndRemove(request.params.id)
     .then(result => {
@@ -72,14 +77,21 @@ app.post('/api/persons', (request, response) => {
     number: request.body.number
   })
 
-  newPerson
-    .save()
-    .then(savedPerson => {
-      response.json(formatPerson(savedPerson))
-    })
-    .catch(error => {
-      console.log(error)
-      response.status(404).end()
+  Person
+    .find({name: newPerson.name})
+    .then(result => {
+      if (result.length < 1) {
+        newPerson
+        .save()
+        .then(savedPerson => {
+          response.json(formatPerson(savedPerson))
+        })
+        .catch(error => {
+          console.log(error)
+          response.status(404).end()
+        })
+      }
+      response.status(409).end()
     })
 })
 
